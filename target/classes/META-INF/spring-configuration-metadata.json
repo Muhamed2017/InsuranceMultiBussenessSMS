@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "mic",
+      "type": "com.mic.smsmiddleware.properties.AppProperties",
+      "sourceType": "com.mic.smsmiddleware.properties.AppProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "mic.business-types",
+      "type": "java.util.Map<java.lang.String,com.mic.smsmiddleware.properties.BusinessTypeConfig>",
+      "sourceType": "com.mic.smsmiddleware.properties.AppProperties"
+    },
+    {
+      "name": "mic.provider",
+      "type": "com.mic.smsmiddleware.properties.SmsProviderProperties",
+      "sourceType": "com.mic.smsmiddleware.properties.AppProperties"
+    },
+    {
+      "name": "mic.scheduling",
+      "type": "com.mic.smsmiddleware.properties.SchedulingProperties",
+      "sourceType": "com.mic.smsmiddleware.properties.AppProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,113 @@
+spring:
+  application:
+    name: MIC-Multi-Business-SMS-Middleware
+    sql:
+      init:
+        mode: always              # or 'embedded' / 'never' depending on your need
+        platform: sqlserver
+        continue-on-error: false
+        separator: ";"
+
+  datasource:
+    url: jdbc:sqlserver://10.65.183.210:1433;databaseName=MIC_SMS_DB;encrypt=true;trustServerCertificate=true
+    username: m.jomaa
+    password: misr@2020
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+        format_sql: false
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema.sql
+
+logging:
+  level:
+    com.mic.smsmiddleware: INFO
+    org.springframework.jdbc.core: WARN
+    org.springframework.web.client: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %-40logger{40} - %msg%n"
+    file:    "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %-40logger{40} - %msg%n"
+  file:
+    name: logs/sms-middleware.log
+    max-size: 50MB
+    max-history: 30
+
+mic:
+  provider:
+    base-url: https://sms-gateway.placeholder.com/api/send
+    username: PLACEHOLDER_USERNAME
+    password: PLACEHOLDER_PASSWORD
+    sender-id: MIC
+    language: "2"
+    environment: "1"
+    success-response-code: "0000"
+    connect-timeout: 5000
+    read-timeout: 10000
+
+  scheduling:
+    processing-start-hour: 10
+    processing-end-hour: 23
+    max-retry-count: 3
+    processing-cron: "0 0 10-23 * * *"
+    retry-cron: "0 */5 * * * *"
+    active-business-types:
+      - issuance
+      - due-installment
+
+  business-types:
+
+    issuance:
+      stored-procedure: SP_ISSUANCE_SMS
+      parameters: []
+      phone-field: info2
+      name-field: info1
+      reference-fields:
+        - info3
+      template: >-
+        Dear {InsuredName}, your policy No. {PolicyNumber} has been successfully
+        issued on {IssuanceDate}. Product: {ProductName}.
+        Welcome to MIC Insurance Family.
+      field-mappings:
+        info1: InsuredName
+        info2: InsuredPhone
+        info3: PolicyNumber
+        info4: IssuanceDate
+        info5: ProductName
+
+    due-installment:
+      stored-procedure: SP_DUE_INSTALLMENT_SMS
+      parameters:
+        - name: DaysAhead
+          value: "10"
+          type: INTEGER
+      phone-field: info2
+      name-field: info1
+      reference-fields:
+        - info3
+        - info5
+      template: >-
+        Dear {InsuredName}, this is a reminder that your installment for
+        policy No. {PolicyNumber} amounting to {InstallmentAmount} EGP is
+        due on {DueDate}. Please pay on time to keep your coverage active.
+      field-mappings:
+        info1: InsuredName
+        info2: InsuredPhone
+        info3: PolicyNumber
+        info4: InstallmentAmount
+        info5: DueDate

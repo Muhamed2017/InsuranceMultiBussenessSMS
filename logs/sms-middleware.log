@@ -1,0 +1,219 @@
+2026-05-04 08:27:35 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - Starting MicSmsMiddlewareApplication using Java 17.0.9 with PID 39284 (D:\Work\Finals\Backend\sms-mic-middleware\target\classes started by 081786 in D:\Work\Finals\Backend\sms-mic-middleware)
+2026-05-04 08:27:35 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - No active profile set, falling back to 1 default profile: "default"
+2026-05-04 08:27:35 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-04 08:27:35 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 1 JPA repository interface.
+2026-05-04 08:27:36 [main] INFO  o.s.b.w.embedded.tomcat.TomcatWebServer  - Tomcat initialized with port 8080 (http)
+2026-05-04 08:27:36 [main] INFO  o.apache.catalina.core.StandardService   - Starting service [Tomcat]
+2026-05-04 08:27:36 [main] INFO  org.apache.catalina.core.StandardEngine  - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-05-04 08:27:36 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/]       - Initializing Spring embedded WebApplicationContext
+2026-05-04 08:27:36 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1009 ms
+2026-05-04 08:27:36 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Starting...
+2026-05-04 08:28:07 [main] ERROR com.zaxxer.hikari.pool.HikariPool        - HikariPool-1 - Exception during pool initialization.
+com.microsoft.sqlserver.jdbc.SQLServerException: Cannot open database "MIC_SMS_DB" requested by the login. The login failed. ClientConnectionId:15fb672e-788f-4f94-ab65-6aac77aab8e2
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:259)
+	at com.microsoft.sqlserver.jdbc.TDSTokenHandler.onEOF(tdsparser.java:304)
+	at com.microsoft.sqlserver.jdbc.TDSParser.parse(tdsparser.java:137)
+	at com.microsoft.sqlserver.jdbc.TDSParser.parse(tdsparser.java:42)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.sendLogon(SQLServerConnection.java:6612)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.logon(SQLServerConnection.java:5154)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection$LogonCommand.doExecute(SQLServerConnection.java:5087)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7675)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4137)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:3583)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:3172)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectInternal(SQLServerConnection.java:3014)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1836)
+	at com.microsoft.sqlserver.jdbc.SQLServerDriver.connect(SQLServerDriver.java:1246)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:160)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:118)
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:81)
+	at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:52)
+	at org.springframework.boot.jdbc.init.DataSourceScriptDatabaseInitializer.runScripts(DataSourceScriptDatabaseInitializer.java:87)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.runScripts(AbstractScriptDatabaseInitializer.java:146)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.applyScripts(AbstractScriptDatabaseInitializer.java:108)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.applySchemaScripts(AbstractScriptDatabaseInitializer.java:98)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.initializeDatabase(AbstractScriptDatabaseInitializer.java:76)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.afterPropertiesSet(AbstractScriptDatabaseInitializer.java:66)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1231)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:949)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.mic.smsmiddleware.MicSmsMiddlewareApplication.main(MicSmsMiddlewareApplication.java:12)
+2026-05-04 08:28:07 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Failed to execute database script
+2026-05-04 08:28:07 [main] INFO  o.apache.catalina.core.StandardService   - Stopping service [Tomcat]
+2026-05-04 08:28:07 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-05-04 08:28:07 [main] ERROR o.springframework.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Failed to execute database script
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1231)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:949)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.mic.smsmiddleware.MicSmsMiddlewareApplication.main(MicSmsMiddlewareApplication.java:12)
+Caused by: org.springframework.jdbc.datasource.init.UncategorizedScriptException: Failed to execute database script
+	at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:67)
+	at org.springframework.boot.jdbc.init.DataSourceScriptDatabaseInitializer.runScripts(DataSourceScriptDatabaseInitializer.java:87)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.runScripts(AbstractScriptDatabaseInitializer.java:146)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.applyScripts(AbstractScriptDatabaseInitializer.java:108)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.applySchemaScripts(AbstractScriptDatabaseInitializer.java:98)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.initializeDatabase(AbstractScriptDatabaseInitializer.java:76)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.afterPropertiesSet(AbstractScriptDatabaseInitializer.java:66)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	... 18 common frames omitted
+Caused by: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:84)
+	at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:52)
+	... 26 common frames omitted
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: Cannot open database "MIC_SMS_DB" requested by the login. The login failed. ClientConnectionId:15fb672e-788f-4f94-ab65-6aac77aab8e2
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:259)
+	at com.microsoft.sqlserver.jdbc.TDSTokenHandler.onEOF(tdsparser.java:304)
+	at com.microsoft.sqlserver.jdbc.TDSParser.parse(tdsparser.java:137)
+	at com.microsoft.sqlserver.jdbc.TDSParser.parse(tdsparser.java:42)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.sendLogon(SQLServerConnection.java:6612)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.logon(SQLServerConnection.java:5154)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection$LogonCommand.doExecute(SQLServerConnection.java:5087)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7675)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4137)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectHelper(SQLServerConnection.java:3583)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.login(SQLServerConnection.java:3172)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connectInternal(SQLServerConnection.java:3014)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.connect(SQLServerConnection.java:1836)
+	at com.microsoft.sqlserver.jdbc.SQLServerDriver.connect(SQLServerDriver.java:1246)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:160)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:118)
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:81)
+	... 27 common frames omitted
+2026-05-04 08:28:49 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - Starting MicSmsMiddlewareApplication using Java 17.0.9 with PID 8028 (D:\Work\Finals\Backend\sms-mic-middleware\target\classes started by 081786 in D:\Work\Finals\Backend\sms-mic-middleware)
+2026-05-04 08:28:49 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - No active profile set, falling back to 1 default profile: "default"
+2026-05-04 08:28:49 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-04 08:28:49 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 1 JPA repository interface.
+2026-05-04 08:28:50 [main] INFO  o.s.b.w.embedded.tomcat.TomcatWebServer  - Tomcat initialized with port 8080 (http)
+2026-05-04 08:28:50 [main] INFO  o.apache.catalina.core.StandardService   - Starting service [Tomcat]
+2026-05-04 08:28:50 [main] INFO  org.apache.catalina.core.StandardEngine  - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-05-04 08:28:50 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/]       - Initializing Spring embedded WebApplicationContext
+2026-05-04 08:28:50 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 887 ms
+2026-05-04 08:28:50 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Starting...
+2026-05-04 08:28:50 [main] INFO  com.zaxxer.hikari.pool.HikariPool        - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 8d4adea2-83ad-4597-9227-4e2e4513f193
+2026-05-04 08:28:50 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Start completed.
+2026-05-04 08:28:50 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Failed to execute SQL script statement #1 of class path resource [db/schema.sql]: IF NOT EXISTS ( SELECT 1 FROM sys.tables WHERE name = 'SMS_LOG' AND type = 'U' ) BEGIN CREATE TABLE SMS_LOG ( id BIGINT IDENTITY(1,1) NOT NULL, business_type VARCHAR(100) NOT NULL, contact_phone VARCHAR(30) NOT NULL, normalized_phone VARCHAR(15) NOT NULL, contact_name NVARCHAR(300) NULL, reference_key VARCHAR(300) NOT NULL, message_content NVARCHAR(MAX) NOT NULL, status VARCHAR(10) NOT NULL, failure_reason NVARCHAR(500) NULL, retry_count INT DEFAULT 0 NOT NULL, sent_at DATETIME NULL, created_at DATETIME DEFAULT GETDATE() NOT NULL, CONSTRAINT PK_SMS_LOG PRIMARY KEY (id), CONSTRAINT CHK_SMS_LOG_STATUS CHECK (status IN ('SENT', 'FAILED')) )
+2026-05-04 08:28:50 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Shutdown initiated...
+2026-05-04 08:28:50 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Shutdown completed.
+2026-05-04 08:28:50 [main] INFO  o.apache.catalina.core.StandardService   - Stopping service [Tomcat]
+2026-05-04 08:28:50 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-05-04 08:28:50 [main] ERROR o.springframework.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Failed to execute SQL script statement #1 of class path resource [db/schema.sql]: IF NOT EXISTS ( SELECT 1 FROM sys.tables WHERE name = 'SMS_LOG' AND type = 'U' ) BEGIN CREATE TABLE SMS_LOG ( id BIGINT IDENTITY(1,1) NOT NULL, business_type VARCHAR(100) NOT NULL, contact_phone VARCHAR(30) NOT NULL, normalized_phone VARCHAR(15) NOT NULL, contact_name NVARCHAR(300) NULL, reference_key VARCHAR(300) NOT NULL, message_content NVARCHAR(MAX) NOT NULL, status VARCHAR(10) NOT NULL, failure_reason NVARCHAR(500) NULL, retry_count INT DEFAULT 0 NOT NULL, sent_at DATETIME NULL, created_at DATETIME DEFAULT GETDATE() NOT NULL, CONSTRAINT PK_SMS_LOG PRIMARY KEY (id), CONSTRAINT CHK_SMS_LOG_STATUS CHECK (status IN ('SENT', 'FAILED')) )
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1231)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:949)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.mic.smsmiddleware.MicSmsMiddlewareApplication.main(MicSmsMiddlewareApplication.java:12)
+Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of class path resource [db/schema.sql]: IF NOT EXISTS ( SELECT 1 FROM sys.tables WHERE name = 'SMS_LOG' AND type = 'U' ) BEGIN CREATE TABLE SMS_LOG ( id BIGINT IDENTITY(1,1) NOT NULL, business_type VARCHAR(100) NOT NULL, contact_phone VARCHAR(30) NOT NULL, normalized_phone VARCHAR(15) NOT NULL, contact_name NVARCHAR(300) NULL, reference_key VARCHAR(300) NOT NULL, message_content NVARCHAR(MAX) NOT NULL, status VARCHAR(10) NOT NULL, failure_reason NVARCHAR(500) NULL, retry_count INT DEFAULT 0 NOT NULL, sent_at DATETIME NULL, created_at DATETIME DEFAULT GETDATE() NOT NULL, CONSTRAINT PK_SMS_LOG PRIMARY KEY (id), CONSTRAINT CHK_SMS_LOG_STATUS CHECK (status IN ('SENT', 'FAILED')) )
+	at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:282)
+	at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.populate(ResourceDatabasePopulator.java:254)
+	at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:54)
+	at org.springframework.boot.jdbc.init.DataSourceScriptDatabaseInitializer.runScripts(DataSourceScriptDatabaseInitializer.java:87)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.runScripts(AbstractScriptDatabaseInitializer.java:146)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.applyScripts(AbstractScriptDatabaseInitializer.java:108)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.applySchemaScripts(AbstractScriptDatabaseInitializer.java:98)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.initializeDatabase(AbstractScriptDatabaseInitializer.java:76)
+	at org.springframework.boot.sql.init.AbstractScriptDatabaseInitializer.afterPropertiesSet(AbstractScriptDatabaseInitializer.java:66)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782)
+	... 18 common frames omitted
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: Incorrect syntax near ')'.
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:259)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1695)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.doExecuteStatement(SQLServerStatement.java:920)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement$StmtExecCmd.doExecute(SQLServerStatement.java:814)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7675)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4137)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:272)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:246)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.execute(SQLServerStatement.java:787)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:261)
+	... 28 common frames omitted
+2026-05-04 08:38:06 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - Starting MicSmsMiddlewareApplication using Java 17.0.9 with PID 23108 (D:\Work\Finals\Backend\sms-mic-middleware\target\classes started by 081786 in D:\Work\Finals\Backend\sms-mic-middleware)
+2026-05-04 08:38:06 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - No active profile set, falling back to 1 default profile: "default"
+2026-05-04 08:38:06 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-04 08:38:06 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 1 JPA repository interface.
+2026-05-04 08:38:07 [main] INFO  o.s.b.w.embedded.tomcat.TomcatWebServer  - Tomcat initialized with port 8080 (http)
+2026-05-04 08:38:07 [main] INFO  o.apache.catalina.core.StandardService   - Starting service [Tomcat]
+2026-05-04 08:38:07 [main] INFO  org.apache.catalina.core.StandardEngine  - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-05-04 08:38:07 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/]       - Initializing Spring embedded WebApplicationContext
+2026-05-04 08:38:07 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 848 ms
+2026-05-04 08:38:07 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Starting...
+2026-05-04 08:38:07 [main] INFO  com.zaxxer.hikari.pool.HikariPool        - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 6ea8074d-b953-49b4-ab69-4bc236f8d798
+2026-05-04 08:38:07 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Start completed.
+2026-05-04 08:38:07 [main] INFO  o.hibernate.jpa.internal.util.LogHelper  - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-04 08:38:07 [main] INFO  org.hibernate.Version                    - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-05-04 08:38:07 [main] INFO  o.h.c.internal.RegionFactoryInitiator    - HHH000026: Second-level cache disabled
+2026-05-04 08:38:07 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo      - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-04 08:38:07 [main] WARN  org.hibernate.orm.deprecation            - HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-04 08:38:08 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator       - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-04 08:38:08 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-04 08:38:08 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory     - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-04 08:38:09 [main] INFO  o.s.b.w.embedded.tomcat.TomcatWebServer  - Tomcat started on port 8080 (http) with context path ''
+2026-05-04 08:38:09 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - Started MicSmsMiddlewareApplication in 3.208 seconds (process running for 3.442)
