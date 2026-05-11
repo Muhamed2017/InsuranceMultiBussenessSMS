@@ -1,0 +1,159 @@
+{
+  "info": {
+    "name": "MIC SMS Middleware",
+    "_postman_id": "mic-sms-middleware-v1",
+    "description": "Collection for testing the MIC Multi-Business SMS Middleware API.\n\nSet the `baseUrl` variable to match your deployment (default: http://localhost:8080).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string",
+      "description": "Base URL of the running application"
+    }
+  ],
+  "item": [
+    {
+      "name": "Business Types",
+      "item": [
+        {
+          "name": "List All Business Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sms/business-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sms", "business-types"]
+            },
+            "description": "Returns all configured business types and which ones are active in the scheduler."
+          },
+          "response": [
+            {
+              "name": "200 OK — Lists configured and active types",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"configured\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\"\n  ],\n  \"scheduledActive\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\"\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Manual Trigger",
+      "item": [
+        {
+          "name": "Trigger — omal-misr-issuance",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sms/process/omal-misr-issuance",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sms", "process", "omal-misr-issuance"]
+            },
+            "description": "Manually executes SMS_OmalMisr stored procedure and sends Omal Misr policy issuance SMS notifications.\n\nThe stored procedure fetches all Omal Misr new business and renewal policies whose period-from date falls between the last recorded transaction date and today.\n\nDeduplication is keyed on `lpolicyactivitykey` — running this endpoint multiple times on the same day will NOT resend already-sent messages."
+          },
+          "response": [
+            {
+              "name": "200 OK — Processing completed",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"omal-misr-issuance\",\n  \"totalFetched\": 12,\n  \"dispatched\": 9,\n  \"skippedDuplicate\": 2,\n  \"skippedInvalidPhone\": 1,\n  \"processingTimeMs\": 3842\n}"
+            },
+            {
+              "name": "200 OK — Nothing to process (all deduplicated)",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"omal-misr-issuance\",\n  \"totalFetched\": 12,\n  \"dispatched\": 0,\n  \"skippedDuplicate\": 12,\n  \"skippedInvalidPhone\": 0,\n  \"processingTimeMs\": 1105\n}"
+            },
+            {
+              "name": "200 OK — SP returned no records",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"omal-misr-issuance\",\n  \"totalFetched\": 0,\n  \"dispatched\": 0,\n  \"skippedDuplicate\": 0,\n  \"skippedInvalidPhone\": 0,\n  \"processingTimeMs\": 287\n}"
+            },
+            {
+              "name": "502 Bad Gateway — Stored procedure failed",
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"error\": \"Stored procedure execution failed\",\n  \"detail\": \"Failed to execute stored procedure: SMS_OmalMisr\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Trigger — issuance",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sms/process/issuance",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sms", "process", "issuance"]
+            },
+            "description": "Manually triggers the issuance business type (SP_ISSUANCE_SMS).\nSends a welcome SMS to customers whose policies were issued today."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"issuance\",\n  \"totalFetched\": 5,\n  \"dispatched\": 5,\n  \"skippedDuplicate\": 0,\n  \"skippedInvalidPhone\": 0,\n  \"processingTimeMs\": 2100\n}"
+            }
+          ]
+        },
+        {
+          "name": "Trigger — due-installment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sms/process/due-installment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sms", "process", "due-installment"]
+            },
+            "description": "Manually triggers the due-installment business type (SP_DUE_INSTALLMENT_SMS).\nSends payment reminders for installments due in 10 days."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"due-installment\",\n  \"totalFetched\": 30,\n  \"dispatched\": 28,\n  \"skippedDuplicate\": 1,\n  \"skippedInvalidPhone\": 1,\n  \"processingTimeMs\": 9540\n}"
+            }
+          ]
+        },
+        {
+          "name": "Trigger — Unknown Type (404 example)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sms/process/nonexistent-type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sms", "process", "nonexistent-type"]
+            },
+            "description": "Demonstrates the 404 response when the business type is not defined in application.yml."
+          },
+          "response": [
+            {
+              "name": "404 Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"error\": \"Unknown business type: nonexistent-type\",\n  \"configured\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\"\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
