@@ -11,6 +11,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -23,13 +26,18 @@ public class HttpSmsProvider implements SmsProvider {
     public SmsDeliveryResult send(String normalizedPhone, String message) {
         SmsProviderProperties config = appProperties.getProvider();
 
-        String url = UriComponentsBuilder.fromHttpUrl(config.getBaseUrl())
+        // Build a java.net.URI (not a String) so RestTemplate uses it as-is and
+        // does not run it through the URI template handler, which would double-encode
+        // the percent signs produced by the UTF-8 encoding of Arabic characters.
+        URI uri = UriComponentsBuilder.fromHttpUrl(config.getBaseUrl())
                 .queryParam("phone", normalizedPhone)
                 .queryParam("msg", message)
-                .toUriString();
+                .build()
+                .encode(StandardCharsets.UTF_8)
+                .toUri();
 
         try {
-            ResponseEntity<String> response = smsRestTemplate.postForEntity(url, null, String.class);
+            ResponseEntity<String> response = smsRestTemplate.postForEntity(uri, null, String.class);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 log.debug("SMS sent successfully to {}. Provider response: {}", normalizedPhone, response.getBody());
