@@ -50,9 +50,7 @@ logging:
 
 mic:
   provider:
-    base-url: https://sms-gateway.placeholder.com/api/send
-    username: PLACEHOLDER_USERNAME
-    password: PLACEHOLDER_PASSWORD
+    base-url: https://api.misrins.com.eg:7443/payment/send
     connect-timeout: 5000
     read-timeout: 10000
 

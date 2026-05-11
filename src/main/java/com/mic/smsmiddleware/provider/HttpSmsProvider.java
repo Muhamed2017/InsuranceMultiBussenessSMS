@@ -5,15 +5,11 @@ import com.mic.smsmiddleware.properties.AppProperties;
 import com.mic.smsmiddleware.properties.SmsProviderProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @Component
@@ -27,22 +23,14 @@ public class HttpSmsProvider implements SmsProvider {
     public SmsDeliveryResult send(String normalizedPhone, String message) {
         SmsProviderProperties config = appProperties.getProvider();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("phone", normalizedPhone);
-        body.add("msg", message);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+        String url = UriComponentsBuilder.fromHttpUrl(config.getBaseUrl())
+                .queryParam("phone", normalizedPhone)
+                .queryParam("msg", message)
+                .toUriString();
 
         try {
-            ResponseEntity<String> response = smsRestTemplate.postForEntity(
-                    config.getBaseUrl(), request, String.class
-            );
+            ResponseEntity<String> response = smsRestTemplate.postForEntity(url, null, String.class);
 
-            // Gateway returns 200 on success; RestTemplate throws RestClientException on 5xx,
-            // so reaching this point already implies a 2xx response.
             if (response.getStatusCode().is2xxSuccessful()) {
                 log.debug("SMS sent successfully to {}. Provider response: {}", normalizedPhone, response.getBody());
                 return SmsDeliveryResult.success(response.getBody());
