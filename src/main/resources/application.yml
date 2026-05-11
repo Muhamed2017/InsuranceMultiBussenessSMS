@@ -51,12 +51,6 @@ logging:
 mic:
   provider:
     base-url: https://api.misrins.com.eg:7443/payment/send
-    username: PLACEHOLDER_USERNAME
-    password: PLACEHOLDER_PASSWORD
-    sender-id: MIC
-    language: "2"
-    environment: "1"
-    success-response-code: "0000"
     connect-timeout: 5000
     read-timeout: 10000
 

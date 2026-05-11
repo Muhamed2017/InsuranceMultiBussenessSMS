@@ -5,15 +5,11 @@ import com.mic.smsmiddleware.properties.AppProperties;
 import com.mic.smsmiddleware.properties.SmsProviderProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @Component
@@ -27,34 +23,17 @@ public class HttpSmsProvider implements SmsProvider {
     public SmsDeliveryResult send(String normalizedPhone, String message) {
         SmsProviderProperties config = appProperties.getProvider();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("username", config.getUsername());
-        body.add("password", config.getPassword());
-        body.add("sender", config.getSenderId());
-        body.add("mobile", normalizedPhone);
-        body.add("message", message);
-        body.add("language", config.getLanguage());
-        body.add("environment", config.getEnvironment());
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+        String url = UriComponentsBuilder.fromHttpUrl(config.getBaseUrl())
+                .queryParam("phone", normalizedPhone)
+                .queryParam("msg", message)
+                .toUriString();
 
         try {
-            ResponseEntity<String> response = smsRestTemplate.postForEntity(
-                    config.getBaseUrl(), request, String.class
-            );
+            ResponseEntity<String> response = smsRestTemplate.postForEntity(url, null, String.class);
 
             if (response.getStatusCode().is2xxSuccessful()) {
-                String responseBody = response.getBody();
-                if (responseBody != null && responseBody.contains(config.getSuccessResponseCode())) {
-                    log.debug("SMS sent successfully to {}. Provider ref: {}", normalizedPhone, responseBody);
-                    return SmsDeliveryResult.success(responseBody);
-                }
-                String reason = "Provider returned non-success code. Response: " + responseBody;
-                log.warn("SMS delivery failed for {}: {}", normalizedPhone, reason);
-                return SmsDeliveryResult.failure(reason);
+                log.debug("SMS sent successfully to {}. Provider response: {}", normalizedPhone, response.getBody());
+                return SmsDeliveryResult.success(response.getBody());
             }
 
             String reason = "HTTP " + response.getStatusCode().value() + " from provider";
