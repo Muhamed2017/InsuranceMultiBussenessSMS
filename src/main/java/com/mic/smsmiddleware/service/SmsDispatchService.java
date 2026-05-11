@@ -17,16 +17,22 @@ public class SmsDispatchService {
     private final MessageTemplateService messageTemplateService;
     private final SmsLogService smsLogService;
 
-    public void dispatch(ContactRecord contact, String template) {
+    /**
+     * Returns true if the SMS was dispatched (sent or failed and logged).
+     * Returns false if the record was skipped because an identical SENT entry
+     * already exists in SMS_LOG (deduplication).
+     */
+    public boolean dispatch(ContactRecord contact, String template) {
         if (deduplicationService.alreadySent(
                 contact.getBusinessType(),
                 contact.getReferenceKey(),
                 contact.getNormalizedPhone())) {
-            return;
+            return false;
         }
 
         String message = messageTemplateService.compose(template, contact.getSemanticData());
         SmsDeliveryResult result = smsProvider.send(contact.getNormalizedPhone(), message);
         smsLogService.record(contact, message, result);
+        return true;
     }
 }

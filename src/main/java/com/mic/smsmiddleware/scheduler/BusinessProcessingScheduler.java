@@ -30,7 +30,7 @@ public class BusinessProcessingScheduler {
 
         for (String businessType : activeTypes) {
             try {
-                businessProcessorService.process(businessType);
+                businessProcessorService.process(businessType);  // result captured by API; ignored here
             } catch (Exception ex) {
                 log.error("Error processing business type '{}' — skipping to next type", businessType, ex);
             }

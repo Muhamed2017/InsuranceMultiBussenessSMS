@@ -1,6 +1,7 @@
 package com.mic.smsmiddleware.service;
 
 import com.mic.smsmiddleware.domain.model.ContactRecord;
+import com.mic.smsmiddleware.domain.model.ProcessingResult;
 import com.mic.smsmiddleware.exception.InvalidMobileNumberException;
 import com.mic.smsmiddleware.properties.AppProperties;
 import com.mic.smsmiddleware.properties.BusinessTypeConfig;
@@ -23,7 +24,8 @@ public class BusinessProcessorService {
     private final MobileValidationService mobileValidationService;
     private final SmsDispatchService smsDispatchService;
 
-    public void process(String businessType) {
+    public ProcessingResult process(String businessType) {
+        long startTime = System.currentTimeMillis();
         BusinessTypeConfig config = resolveConfig(businessType);
 
         log.info("Processing business type: {} using procedure: {}", businessType, config.getStoredProcedure());
@@ -37,21 +39,31 @@ public class BusinessProcessorService {
 
         int dispatched = 0;
         int skippedInvalid = 0;
+        int skippedDuplicate = 0;
 
         for (Map<String, String> rawRecord : rawRecords) {
-            boolean processed = processRecord(businessType, config, rawRecord);
-            if (processed) {
-                dispatched++;
-            } else {
-                skippedInvalid++;
+            RecordOutcome outcome = processRecord(businessType, config, rawRecord);
+            switch (outcome) {
+                case DISPATCHED    -> dispatched++;
+                case DEDUP_SKIPPED -> skippedDuplicate++;
+                case INVALID_PHONE -> skippedInvalid++;
             }
         }
 
-        log.info("Business type '{}' — {} dispatched, {} skipped (invalid phone)",
-                businessType, dispatched, skippedInvalid);
+        log.info("Business type '{}' — {} dispatched, {} dedup-skipped, {} invalid-phone",
+                businessType, dispatched, skippedDuplicate, skippedInvalid);
+
+        return ProcessingResult.builder()
+                .businessType(businessType)
+                .totalFetched(rawRecords.size())
+                .dispatched(dispatched)
+                .skippedDuplicate(skippedDuplicate)
+                .skippedInvalidPhone(skippedInvalid)
+                .processingTimeMs(System.currentTimeMillis() - startTime)
+                .build();
     }
 
-    private boolean processRecord(String businessType, BusinessTypeConfig config, Map<String, String> rawRecord) {
+    private RecordOutcome processRecord(String businessType, BusinessTypeConfig config, Map<String, String> rawRecord) {
         String rawPhone = rawRecord.getOrDefault(config.getPhoneField(), "");
 
         String normalizedPhone;
@@ -59,7 +71,7 @@ public class BusinessProcessorService {
             normalizedPhone = mobileValidationService.normalize(rawPhone);
         } catch (InvalidMobileNumberException ex) {
             log.warn("Skipping record — invalid phone '{}' for businessType={}", rawPhone, businessType);
-            return false;
+            return RecordOutcome.INVALID_PHONE;
         }
 
         Map<String, String> semanticData = applyFieldMappings(rawRecord, config.getFieldMappings());
@@ -75,8 +87,8 @@ public class BusinessProcessorService {
                 .semanticData(semanticData)
                 .build();
 
-        smsDispatchService.dispatch(contact, config.getTemplate());
-        return true;
+        boolean dispatched = smsDispatchService.dispatch(contact, config.getTemplate());
+        return dispatched ? RecordOutcome.DISPATCHED : RecordOutcome.DEDUP_SKIPPED;
     }
 
     private Map<String, String> applyFieldMappings(Map<String, String> rawRecord, Map<String, String> fieldMappings) {
@@ -105,5 +117,9 @@ public class BusinessProcessorService {
             throw new IllegalArgumentException("No configuration found for business type: " + businessType);
         }
         return config;
+    }
+
+    private enum RecordOutcome {
+        DISPATCHED, DEDUP_SKIPPED, INVALID_PHONE
     }
 }
