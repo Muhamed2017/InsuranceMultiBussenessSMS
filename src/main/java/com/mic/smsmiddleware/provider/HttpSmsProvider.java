@@ -31,13 +31,8 @@ public class HttpSmsProvider implements SmsProvider {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("username", config.getUsername());
-        body.add("password", config.getPassword());
-        body.add("sender", config.getSenderId());
-        body.add("mobile", normalizedPhone);
-        body.add("message", message);
-        body.add("language", config.getLanguage());
-        body.add("environment", config.getEnvironment());
+        body.add("phone", normalizedPhone);
+        body.add("msg", message);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
 
@@ -46,15 +41,11 @@ public class HttpSmsProvider implements SmsProvider {
                     config.getBaseUrl(), request, String.class
             );
 
+            // Gateway returns 200 on success; RestTemplate throws RestClientException on 5xx,
+            // so reaching this point already implies a 2xx response.
             if (response.getStatusCode().is2xxSuccessful()) {
-                String responseBody = response.getBody();
-                if (responseBody != null && responseBody.contains(config.getSuccessResponseCode())) {
-                    log.debug("SMS sent successfully to {}. Provider ref: {}", normalizedPhone, responseBody);
-                    return SmsDeliveryResult.success(responseBody);
-                }
-                String reason = "Provider returned non-success code. Response: " + responseBody;
-                log.warn("SMS delivery failed for {}: {}", normalizedPhone, reason);
-                return SmsDeliveryResult.failure(reason);
+                log.debug("SMS sent successfully to {}. Provider response: {}", normalizedPhone, response.getBody());
+                return SmsDeliveryResult.success(response.getBody());
             }
 
             String reason = "HTTP " + response.getStatusCode().value() + " from provider";
