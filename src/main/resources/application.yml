@@ -69,6 +69,7 @@ mic:
     active-business-types:
       - issuance
       - due-installment
+      - omal-misr-issuance
 
   business-types:
 
@@ -111,3 +112,18 @@ mic:
         info3: PolicyNumber
         info4: InstallmentAmount
         info5: DueDate
+
+    omal-misr-issuance:
+      stored-procedure: SMS_OmalMisr
+      parameters: []
+      phone-field: mobile_no
+      name-field: sendsystem
+      reference-fields:
+        - lpolicyactivitykey
+      template: "{SendMessage}"
+      field-mappings:
+        sendsystem: SendSystem
+        mobile_no: MobileNo
+        sendmessage: SendMessage
+        status: Status
+        lpolicyactivitykey: PolicyActivityKey
