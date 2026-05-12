@@ -35,7 +35,7 @@
               "status": "OK",
               "code": 200,
               "header": [{ "key": "Content-Type", "value": "application/json" }],
-              "body": "{\n  \"configured\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\"\n  ],\n  \"scheduledActive\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\"\n  ]\n}"
+              "body": "{\n  \"configured\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\",\n    \"motor-issuance-notification\"\n  ],\n  \"scheduledActive\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\"\n  ]\n}"
             }
           ]
         }
@@ -132,6 +132,49 @@
           ]
         },
         {
+          "name": "Trigger — motor-issuance-notification",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sms/process/motor-issuance-notification",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sms", "process", "motor-issuance-notification"]
+            },
+            "description": "Manually executes getIssuancesForNotification (MIC_DWH_UAT.dbo) and sends Arabic motor policy issuance SMS notifications.\n\nCovers motor products (2000228–2000231), New Business activity only, filtered by entry date range.\n\nDeduplication key: sPolicyNo — re-running this endpoint will NOT resend SMS for policies that were already notified.\n\nSMS template:\nعملينا العزيز، تم إصدار وثيقتكم {sDivision}  رقم {sPolicyNo}   بمبلغ  {NetWritten} جنيه مصري.\nشكرا لاختياركم شركة مصر للتأمين ونتمنى لكم تجربة آمنة ومميزة.\nلتحميل التطبيق : https://misrins.com.eg/images/files/medical.xls\n\nAlso runs automatically every day at 12:00 PM."
+          },
+          "response": [
+            {
+              "name": "200 OK — SMS dispatched",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"motor-issuance-notification\",\n  \"totalFetched\": 8,\n  \"dispatched\": 7,\n  \"skippedDuplicate\": 0,\n  \"skippedInvalidPhone\": 1,\n  \"processingTimeMs\": 3210\n}"
+            },
+            {
+              "name": "200 OK — All deduplicated (already sent)",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"motor-issuance-notification\",\n  \"totalFetched\": 8,\n  \"dispatched\": 0,\n  \"skippedDuplicate\": 8,\n  \"skippedInvalidPhone\": 0,\n  \"processingTimeMs\": 540\n}"
+            },
+            {
+              "name": "200 OK — SP returned no records",
+              "status": "OK",
+              "code": 200,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"businessType\": \"motor-issuance-notification\",\n  \"totalFetched\": 0,\n  \"dispatched\": 0,\n  \"skippedDuplicate\": 0,\n  \"skippedInvalidPhone\": 0,\n  \"processingTimeMs\": 310\n}"
+            },
+            {
+              "name": "502 Bad Gateway — Stored procedure failed",
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": "{\n  \"error\": \"Stored procedure execution failed\",\n  \"detail\": \"Failed to execute stored procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification\"\n}"
+            }
+          ]
+        },
+        {
           "name": "Trigger — Unknown Type (404 example)",
           "request": {
             "method": "POST",
@@ -149,7 +192,7 @@
               "status": "Not Found",
               "code": 404,
               "header": [{ "key": "Content-Type", "value": "application/json" }],
-              "body": "{\n  \"error\": \"Unknown business type: nonexistent-type\",\n  \"configured\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\"\n  ]\n}"
+              "body": "{\n  \"error\": \"Unknown business type: nonexistent-type\",\n  \"configured\": [\n    \"issuance\",\n    \"due-installment\",\n    \"omal-misr-issuance\",\n    \"motor-issuance-notification\"\n  ]\n}"
             }
           ]
         }
