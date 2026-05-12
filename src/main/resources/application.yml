@@ -60,6 +60,7 @@ mic:
     max-retry-count: 3
     processing-cron: "0 0 10-23 * * *"
     retry-cron: "0 */5 * * * *"
+    motor-issuance-cron: "0 0 12 * * *"
     active-business-types:
       - issuance
       - due-installment
@@ -121,3 +122,19 @@ mic:
         sendmessage: SendMessage
         status: Status
         lpolicyactivitykey: PolicyActivityKey
+
+    motor-issuance-notification:
+      stored-procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+      parameters: []
+      phone-field: smobilephone
+      name-field: sdivision
+      reference-fields:
+        - spolicyno
+      template: |
+        عملينا العزيز، تم إصدار وثيقتكم {sDivision}  رقم {sPolicyNo}   بمبلغ  {NetWritten} جنيه مصري.
+        شكرا لاختياركم شركة مصر للتأمين ونتمنى لكم تجربة آمنة ومميزة.
+        لتحميل التطبيق : https://misrins.com.eg/images/files/medical.xls
+      field-mappings:
+        sdivision: sDivision
+        spolicyno: sPolicyNo
+        netwritten: NetWritten
