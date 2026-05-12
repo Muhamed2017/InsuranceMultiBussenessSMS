@@ -32,9 +32,15 @@ public class SmsProcessingController {
      */
     @GetMapping("/business-types")
     public ResponseEntity<Map<String, Object>> listBusinessTypes() {
+        Map<String, String> scheduled = new java.util.LinkedHashMap<>();
+        appProperties.getBusinessTypes().forEach((type, config) -> {
+            if (org.springframework.util.StringUtils.hasText(config.getCron())) {
+                scheduled.put(type, config.getCron());
+            }
+        });
         return ResponseEntity.ok(Map.of(
                 "configured", appProperties.getBusinessTypes().keySet(),
-                "scheduledActive", appProperties.getScheduling().getActiveBusinessTypes()
+                "scheduled", scheduled
         ));
     }
 
