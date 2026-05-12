@@ -50,7 +50,7 @@ logging:
 
 mic:
   provider:
-    base-url: https://api.misrins.com.eg:7443/payment/send
+    base-url: http://10.65.192.83:8065/generic/sms
     connect-timeout: 5000
     read-timeout: 10000
 

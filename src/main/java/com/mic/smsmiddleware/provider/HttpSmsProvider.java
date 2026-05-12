@@ -2,17 +2,18 @@ package com.mic.smsmiddleware.provider;
 
 import com.mic.smsmiddleware.domain.model.SmsDeliveryResult;
 import com.mic.smsmiddleware.properties.AppProperties;
-import com.mic.smsmiddleware.properties.SmsProviderProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -24,20 +25,21 @@ public class HttpSmsProvider implements SmsProvider {
 
     @Override
     public SmsDeliveryResult send(String normalizedPhone, String message) {
-        SmsProviderProperties config = appProperties.getProvider();
+        String url = appProperties.getProvider().getBaseUrl();
 
-        // Build a java.net.URI (not a String) so RestTemplate uses it as-is and
-        // does not run it through the URI template handler, which would double-encode
-        // the percent signs produced by the UTF-8 encoding of Arabic characters.
-        URI uri = UriComponentsBuilder.fromHttpUrl(config.getBaseUrl())
-                .queryParam("phone", normalizedPhone)
-                .queryParam("msg", message)
-                .build()
-                .encode(StandardCharsets.UTF_8)
-                .toUri();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, String> body = new LinkedHashMap<>();
+        body.put("phone", normalizedPhone);
+        body.put("message", message);
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(body, headers);
+
+        log.debug("Sending SMS to {}", normalizedPhone);
 
         try {
-            ResponseEntity<String> response = smsRestTemplate.postForEntity(uri, null, String.class);
+            ResponseEntity<String> response = smsRestTemplate.postForEntity(url, request, String.class);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 log.debug("SMS sent successfully to {}. Provider response: {}", normalizedPhone, response.getBody());
