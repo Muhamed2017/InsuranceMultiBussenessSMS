@@ -50,12 +50,7 @@ logging:
 
 mic:
   provider:
-    base-url: https://api.misrins.com.eg:7443/payment/send
-    username:        # set from environment / secrets
-    password:        # set from environment / secrets
-    sender-id:       # set from environment / secrets
-    language: "2"    # 2 = Arabic
-    environment: "1"
+    base-url: http://10.65.192.83:8065/generic/sms
     connect-timeout: 5000
     read-timeout: 10000
 
