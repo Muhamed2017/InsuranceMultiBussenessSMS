@@ -19,4 +19,5 @@ public class BusinessTypeConfig {
     private List<String> referenceFields = new ArrayList<>();
     private String template;
     private Map<String, String> fieldMappings = new LinkedHashMap<>();
+    private String cron;
 }

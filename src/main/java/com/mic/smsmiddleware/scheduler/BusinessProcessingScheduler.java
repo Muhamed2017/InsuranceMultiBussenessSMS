@@ -4,38 +4,37 @@ import com.mic.smsmiddleware.properties.AppProperties;
 import com.mic.smsmiddleware.service.BusinessProcessorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class BusinessProcessingScheduler {
+public class BusinessProcessingScheduler implements SchedulingConfigurer {
 
     private final AppProperties appProperties;
     private final BusinessProcessorService businessProcessorService;
 
-    @Scheduled(cron = "${mic.scheduling.processing-cron:0 0 10-23 * * *}")
-    public void runScheduledProcessing() {
-        List<String> activeTypes = appProperties.getScheduling().getActiveBusinessTypes();
-
-        if (activeTypes.isEmpty()) {
-            log.warn("No active business types configured — nothing to process");
-            return;
-        }
-
-        log.info("Starting scheduled SMS processing for {} business type(s): {}", activeTypes.size(), activeTypes);
-
-        for (String businessType : activeTypes) {
-            try {
-                businessProcessorService.process(businessType);  // result captured by API; ignored here
-            } catch (Exception ex) {
-                log.error("Error processing business type '{}' — skipping to next type", businessType, ex);
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar registrar) {
+        appProperties.getBusinessTypes().forEach((type, config) -> {
+            if (!StringUtils.hasText(config.getCron())) {
+                log.warn("Business type '{}' has no cron defined — skipping scheduling", type);
+                return;
             }
-        }
+            log.info("Scheduling business type '{}' with cron: {}", type, config.getCron());
+            registrar.addCronTask(() -> runType(type), config.getCron());
+        });
+    }
 
-        log.info("Scheduled SMS processing completed");
+    private void runType(String businessType) {
+        log.info("Scheduled run starting for '{}'", businessType);
+        try {
+            businessProcessorService.process(businessType);
+        } catch (Exception ex) {
+            log.error("Scheduled run failed for '{}'", businessType, ex);
+        }
     }
 }
