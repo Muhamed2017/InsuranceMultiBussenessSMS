@@ -122,7 +122,16 @@ mic:
     motor-issuance-notification:
       stored-procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
       cron: "0 0 12 * * *"
-      parameters: []
+      parameters:
+        - name: dtFrom
+          value: "2026-05-13"
+          type: STRING
+        - name: dtTo
+          value: "2026-05-13"
+          type: STRING
+        - name: lProductKeys
+          value: "[2000228,2000229,2000230,2000231]"
+          type: STRING
       phone-field: smobilephone
       name-field: sdivision
       reference-fields:

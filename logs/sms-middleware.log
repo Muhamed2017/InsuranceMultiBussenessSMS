@@ -1,2 +1,210 @@
 2026-05-13 08:03:54 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - Starting MicSmsMiddlewareApplication using Java 17.0.9 with PID 52276 (D:\Work\Finals\Backend\sms-mic-middleware\target\classes started by 081786 in D:\Work\Finals\Backend\sms-mic-middleware)
 2026-05-13 08:03:54 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - No active profile set, falling back to 1 default profile: "default"
+2026-05-13 08:03:55 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-13 08:03:55 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 39 ms. Found 1 JPA repository interface.
+2026-05-13 08:03:55 [main] INFO  o.s.b.w.embedded.tomcat.TomcatWebServer  - Tomcat initialized with port 8080 (http)
+2026-05-13 08:03:55 [main] INFO  o.apache.catalina.core.StandardService   - Starting service [Tomcat]
+2026-05-13 08:03:55 [main] INFO  org.apache.catalina.core.StandardEngine  - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-05-13 08:03:55 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/]       - Initializing Spring embedded WebApplicationContext
+2026-05-13 08:03:55 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1029 ms
+2026-05-13 08:03:55 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Starting...
+2026-05-13 08:03:57 [main] INFO  com.zaxxer.hikari.pool.HikariPool        - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 4cb982a0-a1cf-4be3-a850-e665ef962c73
+2026-05-13 08:03:57 [main] INFO  com.zaxxer.hikari.HikariDataSource       - HikariPool-1 - Start completed.
+2026-05-13 08:03:57 [main] INFO  o.hibernate.jpa.internal.util.LogHelper  - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-13 08:03:57 [main] INFO  org.hibernate.Version                    - HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-05-13 08:03:57 [main] INFO  o.h.c.internal.RegionFactoryInitiator    - HHH000026: Second-level cache disabled
+2026-05-13 08:03:57 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo      - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-13 08:03:57 [main] WARN  org.hibernate.orm.deprecation            - HHH90000025: SQLServerDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-05-13 08:03:58 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator       - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-05-13 08:03:58 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-13 08:03:58 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory     - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-13 08:03:59 [main] INFO  o.s.b.w.embedded.tomcat.TomcatWebServer  - Tomcat started on port 8080 (http) with context path ''
+2026-05-13 08:03:59 [main] INFO  c.m.s.s.BusinessProcessingScheduler      - Scheduling business type 'issuance' with cron: 0 0 10-23 * * *
+2026-05-13 08:03:59 [main] INFO  c.m.s.s.BusinessProcessingScheduler      - Scheduling business type 'due-installment' with cron: 0 0 10-23 * * *
+2026-05-13 08:03:59 [main] INFO  c.m.s.s.BusinessProcessingScheduler      - Scheduling business type 'omal-misr-issuance' with cron: 0 0 10-23 * * *
+2026-05-13 08:03:59 [main] INFO  c.m.s.s.BusinessProcessingScheduler      - Scheduling business type 'motor-issuance-notification' with cron: 0 0 12 * * *
+2026-05-13 08:03:59 [main] INFO  c.m.s.MicSmsMiddlewareApplication        - Started MicSmsMiddlewareApplication in 5.193 seconds (process running for 5.455)
+2026-05-13 08:04:10 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/]       - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-13 08:04:10 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet        - Initializing Servlet 'dispatcherServlet'
+2026-05-13 08:04:10 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet        - Completed initialization in 1 ms
+2026-05-13 08:04:11 [http-nio-8080-exec-1] INFO  c.m.s.controller.SmsProcessingController - Manual trigger received — businessType=motor-issuance-notification
+2026-05-13 08:04:11 [http-nio-8080-exec-1] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: motor-issuance-notification using procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+2026-05-13 08:04:12 [http-nio-8080-exec-1] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 record(s) fetched from SP
+2026-05-13 08:04:13 [http-nio-8080-exec-1] INFO  c.m.smsmiddleware.service.SmsLogService  - SMS sent — businessType=motor-issuance-notification, phone=01015862559, ref=MOTP015952426A
+2026-05-13 08:04:14 [http-nio-8080-exec-1] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 dispatched, 0 dedup-skipped, 0 invalid-phone
+2026-05-13 08:20:18 [http-nio-8080-exec-5] INFO  c.m.s.controller.SmsProcessingController - Manual trigger received — businessType=motor-issuance-notification
+2026-05-13 08:20:18 [http-nio-8080-exec-5] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: motor-issuance-notification using procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+2026-05-13 08:20:19 [http-nio-8080-exec-5] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 record(s) fetched from SP
+2026-05-13 08:20:19 [http-nio-8080-exec-5] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 0 dispatched, 1 dedup-skipped, 0 invalid-phone
+2026-05-13 08:54:13 [http-nio-8080-exec-6] INFO  c.m.s.controller.SmsProcessingController - Manual trigger received — businessType=motor-issuance-notification
+2026-05-13 08:54:13 [http-nio-8080-exec-6] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: motor-issuance-notification using procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+2026-05-13 08:54:13 [http-nio-8080-exec-6] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 record(s) fetched from SP
+2026-05-13 08:54:13 [http-nio-8080-exec-6] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 0 dispatched, 1 dedup-skipped, 0 invalid-phone
+2026-05-13 09:15:24 [http-nio-8080-exec-10] INFO  c.m.s.controller.SmsProcessingController - Manual trigger received — businessType=motor-issuance-notification
+2026-05-13 09:15:24 [http-nio-8080-exec-10] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: motor-issuance-notification using procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+2026-05-13 09:15:25 [http-nio-8080-exec-10] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 record(s) fetched from SP
+2026-05-13 09:15:25 [http-nio-8080-exec-10] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 0 dispatched, 1 dedup-skipped, 0 invalid-phone
+2026-05-13 09:15:50 [http-nio-8080-exec-1] INFO  c.m.s.controller.SmsProcessingController - Manual trigger received — businessType=motor-issuance-notification
+2026-05-13 09:15:50 [http-nio-8080-exec-1] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: motor-issuance-notification using procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+2026-05-13 09:15:50 [http-nio-8080-exec-1] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 record(s) fetched from SP
+2026-05-13 09:15:50 [http-nio-8080-exec-1] INFO  c.m.smsmiddleware.service.SmsLogService  - SMS sent — businessType=motor-issuance-notification, phone=01015862559, ref=MOTP015952426A
+2026-05-13 09:15:50 [http-nio-8080-exec-1] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 dispatched, 0 dedup-skipped, 0 invalid-phone
+2026-05-13 09:17:19 [http-nio-8080-exec-5] INFO  c.m.s.controller.SmsProcessingController - Manual trigger received — businessType=motor-issuance-notification
+2026-05-13 09:17:19 [http-nio-8080-exec-5] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: motor-issuance-notification using procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+2026-05-13 09:17:19 [http-nio-8080-exec-5] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 record(s) fetched from SP
+2026-05-13 09:17:20 [http-nio-8080-exec-5] INFO  c.m.smsmiddleware.service.SmsLogService  - SMS sent — businessType=motor-issuance-notification, phone=01015862559, ref=MOTP015952426A
+2026-05-13 09:17:20 [http-nio-8080-exec-5] INFO  c.m.s.service.BusinessProcessorService   - Business type 'motor-issuance-notification' — 1 dispatched, 0 dedup-skipped, 0 invalid-phone
+2026-05-13 09:45:58 [http-nio-8080-exec-7] INFO  c.m.s.controller.SmsProcessingController - Manual trigger received — businessType=motor-issuance-notification
+2026-05-13 09:45:58 [http-nio-8080-exec-7] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: motor-issuance-notification using procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+2026-05-13 09:45:58 [http-nio-8080-exec-7] ERROR c.m.s.controller.SmsProcessingController - Manual trigger failed — stored procedure error for businessType=motor-issuance-notification
+com.mic.smsmiddleware.exception.StoredProcedureException: Failed to execute stored procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
+	at com.mic.smsmiddleware.service.StoredProcedureService.execute(StoredProcedureService.java:40)
+	at com.mic.smsmiddleware.service.BusinessProcessorService.process(BusinessProcessorService.java:33)
+	at com.mic.smsmiddleware.controller.SmsProcessingController.triggerProcessing(SmsProcessingController.java:70)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:259)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:192)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:920)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:830)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Caused by: org.springframework.jdbc.UncategorizedSQLException: CallableStatementCallback; uncategorized SQLException; SQL state [S0004]; error code [201]; Procedure or function 'GetIssuancesForNotification' expects parameter '@dtFrom', which was not supplied.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1183)
+	at com.mic.smsmiddleware.service.StoredProcedureService.execute(StoredProcedureService.java:29)
+	... 52 common frames omitted
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: Procedure or function 'GetIssuancesForNotification' expects parameter '@dtFrom', which was not supplied.
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:259)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1695)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:648)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:567)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7675)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4137)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:272)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:246)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.execute(SQLServerPreparedStatement.java:544)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyCallableStatement.execute(HikariProxyCallableStatement.java)
+	at com.mic.smsmiddleware.service.StoredProcedureService.lambda$1(StoredProcedureService.java:33)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1164)
+	... 53 common frames omitted
+2026-05-13 10:00:00 [scheduling-1] INFO  c.m.s.s.BusinessProcessingScheduler      - Scheduled run starting for 'issuance'
+2026-05-13 10:00:00 [scheduling-1] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: issuance using procedure: SP_ISSUANCE_SMS
+2026-05-13 10:00:00 [scheduling-1] ERROR c.m.s.s.BusinessProcessingScheduler      - Scheduled run failed for 'issuance'
+com.mic.smsmiddleware.exception.StoredProcedureException: Failed to execute stored procedure: SP_ISSUANCE_SMS
+	at com.mic.smsmiddleware.service.StoredProcedureService.execute(StoredProcedureService.java:40)
+	at com.mic.smsmiddleware.service.BusinessProcessorService.process(BusinessProcessorService.java:33)
+	at com.mic.smsmiddleware.scheduler.BusinessProcessingScheduler.runType(BusinessProcessingScheduler.java:35)
+	at com.mic.smsmiddleware.scheduler.BusinessProcessingScheduler.lambda$1(BusinessProcessingScheduler.java:28)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:96)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Caused by: org.springframework.jdbc.UncategorizedSQLException: CallableStatementCallback; uncategorized SQLException; SQL state [S0062]; error code [2812]; Could not find stored procedure 'SP_ISSUANCE_SMS'.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1183)
+	at com.mic.smsmiddleware.service.StoredProcedureService.execute(StoredProcedureService.java:29)
+	... 11 common frames omitted
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: Could not find stored procedure 'SP_ISSUANCE_SMS'.
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:259)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1695)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:648)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:567)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7675)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4137)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:272)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:246)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.execute(SQLServerPreparedStatement.java:544)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyCallableStatement.execute(HikariProxyCallableStatement.java)
+	at com.mic.smsmiddleware.service.StoredProcedureService.lambda$1(StoredProcedureService.java:33)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1164)
+	... 12 common frames omitted
+2026-05-13 10:00:00 [scheduling-1] INFO  c.m.s.s.BusinessProcessingScheduler      - Scheduled run starting for 'due-installment'
+2026-05-13 10:00:00 [scheduling-1] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: due-installment using procedure: SP_DUE_INSTALLMENT_SMS
+2026-05-13 10:00:00 [scheduling-1] ERROR c.m.s.s.BusinessProcessingScheduler      - Scheduled run failed for 'due-installment'
+com.mic.smsmiddleware.exception.StoredProcedureException: Failed to execute stored procedure: SP_DUE_INSTALLMENT_SMS
+	at com.mic.smsmiddleware.service.StoredProcedureService.execute(StoredProcedureService.java:40)
+	at com.mic.smsmiddleware.service.BusinessProcessorService.process(BusinessProcessorService.java:33)
+	at com.mic.smsmiddleware.scheduler.BusinessProcessingScheduler.runType(BusinessProcessingScheduler.java:35)
+	at com.mic.smsmiddleware.scheduler.BusinessProcessingScheduler.lambda$1(BusinessProcessingScheduler.java:28)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:96)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Caused by: org.springframework.jdbc.UncategorizedSQLException: CallableStatementCallback; uncategorized SQLException; SQL state [S0062]; error code [2812]; Could not find stored procedure 'SP_DUE_INSTALLMENT_SMS'.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1183)
+	at com.mic.smsmiddleware.service.StoredProcedureService.execute(StoredProcedureService.java:29)
+	... 11 common frames omitted
+Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: Could not find stored procedure 'SP_DUE_INSTALLMENT_SMS'.
+	at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:259)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1695)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:648)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:567)
+	at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7675)
+	at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:4137)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:272)
+	at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:246)
+	at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.execute(SQLServerPreparedStatement.java:544)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyCallableStatement.execute(HikariProxyCallableStatement.java)
+	at com.mic.smsmiddleware.service.StoredProcedureService.lambda$1(StoredProcedureService.java:33)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1164)
+	... 12 common frames omitted
+2026-05-13 10:00:00 [scheduling-1] INFO  c.m.s.s.BusinessProcessingScheduler      - Scheduled run starting for 'omal-misr-issuance'
+2026-05-13 10:00:00 [scheduling-1] INFO  c.m.s.service.BusinessProcessorService   - Processing business type: omal-misr-issuance using procedure: SMS_OmalMisr
+2026-05-13 10:00:01 [scheduling-1] INFO  c.m.s.service.BusinessProcessorService   - Business type 'omal-misr-issuance' — 1 record(s) fetched from SP
+2026-05-13 10:00:02 [scheduling-1] INFO  c.m.smsmiddleware.service.SmsLogService  - SMS sent — businessType=omal-misr-issuance, phone=01015862559, ref=2606567
+2026-05-13 10:00:02 [scheduling-1] INFO  c.m.s.service.BusinessProcessorService   - Business type 'omal-misr-issuance' — 1 dispatched, 0 dedup-skipped, 0 invalid-phone
