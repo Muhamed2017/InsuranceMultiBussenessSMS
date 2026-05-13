@@ -124,10 +124,10 @@ mic:
       cron: "0 0 12 * * *"
       parameters:
         - name: dtFrom
-          value: "2026-05-13"
+          value: "TODAY"
           type: STRING
         - name: dtTo
-          value: "2026-05-13"
+          value: "TODAY"
           type: STRING
         - name: lProductKeys
           value: "[2000228,2000229,2000230,2000231]"

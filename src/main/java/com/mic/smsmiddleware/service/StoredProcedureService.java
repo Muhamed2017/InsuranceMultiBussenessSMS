@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -52,14 +53,16 @@ public class StoredProcedureService {
     }
 
     private void bindParameters(CallableStatement cs, List<SpParameterConfig> parameters) throws SQLException {
+        String today = LocalDate.now().toString();
         for (int i = 0; i < parameters.size(); i++) {
             SpParameterConfig param = parameters.get(i);
             int position = i + 1;
+            String value = "TODAY".equalsIgnoreCase(param.getValue()) ? today : param.getValue();
             switch (param.getType().toUpperCase()) {
-                case "INTEGER" -> cs.setInt(position, Integer.parseInt(param.getValue()));
-                case "DECIMAL" -> cs.setBigDecimal(position, new BigDecimal(param.getValue()));
-                case "DATE"    -> cs.setDate(position, Date.valueOf(param.getValue()));
-                default        -> cs.setString(position, param.getValue());
+                case "INTEGER" -> cs.setInt(position, Integer.parseInt(value));
+                case "DECIMAL" -> cs.setBigDecimal(position, new BigDecimal(value));
+                case "DATE"    -> cs.setDate(position, Date.valueOf(value));
+                default        -> cs.setString(position, value);
             }
         }
     }
