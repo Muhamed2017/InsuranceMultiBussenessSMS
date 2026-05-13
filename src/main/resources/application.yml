@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: MIC-Multi-Business-SMS-Middleware
@@ -61,63 +64,63 @@ mic:
     retry-cron: "0 */5 * * * *"
 
   business-types:
-    issuance:
-      stored-procedure: SP_ISSUANCE_SMS
-      cron: "0 0 10-23 * * *"
-      parameters: []
-      phone-field: info2
-      name-field: info1
-      reference-fields:
-        - info3
-      template: >-
-        Dear {InsuredName}, your policy No. {PolicyNumber} has been successfully
-        issued on {IssuanceDate}. Product: {ProductName}.
-        Welcome to MIC Insurance Family.
-      field-mappings:
-        info1: InsuredName
-        info2: InsuredPhone
-        info3: PolicyNumber
-        info4: IssuanceDate
-        info5: ProductName
+    # issuance:
+    #   stored-procedure: SP_ISSUANCE_SMS
+    #   cron: "0 0 10-23 * * *"
+    #   parameters: []
+    #   phone-field: info2
+    #   name-field: info1
+    #   reference-fields:
+    #     - info3
+    #   template: >-
+    #     Dear {InsuredName}, your policy No. {PolicyNumber} has been successfully
+    #     issued on {IssuanceDate}. Product: {ProductName}.
+    #     Welcome to MIC Insurance Family.
+    #   field-mappings:
+    #     info1: InsuredName
+    #     info2: InsuredPhone
+    #     info3: PolicyNumber
+    #     info4: IssuanceDate
+    #     info5: ProductName
 
-    due-installment:
-      stored-procedure: SP_DUE_INSTALLMENT_SMS
-      cron: "0 0 10-23 * * *"
-      parameters:
-        - name: DaysAhead
-          value: "10"
-          type: INTEGER
-      phone-field: info2
-      name-field: info1
-      reference-fields:
-        - info3
-        - info5
-      template: >-
-        Dear {InsuredName}, this is a reminder that your installment for
-        policy No. {PolicyNumber} amounting to {InstallmentAmount} EGP is
-        due on {DueDate}. Please pay on time to keep your coverage active.
-      field-mappings:
-        info1: InsuredName
-        info2: InsuredPhone
-        info3: PolicyNumber
-        info4: InstallmentAmount
-        info5: DueDate
+    # due-installment:
+    #   stored-procedure: SP_DUE_INSTALLMENT_SMS
+    #   cron: "0 0 10-23 * * *"
+    #   parameters:
+    #     - name: DaysAhead
+    #       value: "10"
+    #       type: INTEGER
+    #   phone-field: info2
+    #   name-field: info1
+    #   reference-fields:
+    #     - info3
+    #     - info5
+    #   template: >-
+    #     Dear {InsuredName}, this is a reminder that your installment for
+    #     policy No. {PolicyNumber} amounting to {InstallmentAmount} EGP is
+    #     due on {DueDate}. Please pay on time to keep your coverage active.
+    #   field-mappings:
+    #     info1: InsuredName
+    #     info2: InsuredPhone
+    #     info3: PolicyNumber
+    #     info4: InstallmentAmount
+    #     info5: DueDate
 
-    omal-misr-issuance:
-      stored-procedure: SMS_OmalMisr
-      cron: "0 0 10-23 * * *"
-      parameters: []
-      phone-field: mobile_no
-      name-field: sendsystem
-      reference-fields:
-        - lpolicyactivitykey
-      template: "{SendMessage}"
-      field-mappings:
-        sendsystem: SendSystem
-        mobile_no: MobileNo
-        sendmessage: SendMessage
-        status: Status
-        lpolicyactivitykey: PolicyActivityKey
+    # omal-misr-issuance:
+    #   stored-procedure: SMS_OmalMisr
+    #   cron: "0 0 10-23 * * *"
+    #   parameters: []
+    #   phone-field: mobile_no
+    #   name-field: sendsystem
+    #   reference-fields:
+    #     - lpolicyactivitykey
+    #   template: "{SendMessage}"
+    #   field-mappings:
+    #     sendsystem: SendSystem
+    #     mobile_no: MobileNo
+    #     sendmessage: SendMessage
+    #     status: Status
+    #     lpolicyactivitykey: PolicyActivityKey
 
     motor-issuance-notification:
       stored-procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
