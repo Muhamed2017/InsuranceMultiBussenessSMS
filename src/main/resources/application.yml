@@ -124,7 +124,7 @@ mic:
 
     motor-issuance-notification:
       stored-procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
-      cron: "0 0 12 * * *"
+      cron: "0 0/10 8-23 * * *"
       parameters:
         - name: dtFrom
           value: "TODAY"
