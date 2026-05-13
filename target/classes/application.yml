@@ -3,7 +3,7 @@ spring:
     name: MIC-Multi-Business-SMS-Middleware
     sql:
       init:
-        mode: always              # or 'embedded' / 'never' depending on your need
+        mode: always # or 'embedded' / 'never' depending on your need
         platform: sqlserver
         continue-on-error: false
         separator: ";"
@@ -42,7 +42,7 @@ logging:
     org.springframework.web.client: WARN
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %-40logger{40} - %msg%n"
-    file:    "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %-40logger{40} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %-40logger{40} - %msg%n"
   file:
     name: logs/sms-middleware.log
     max-size: 50MB
@@ -61,7 +61,6 @@ mic:
     retry-cron: "0 */5 * * * *"
 
   business-types:
-
     issuance:
       stored-procedure: SP_ISSUANCE_SMS
       cron: "0 0 10-23 * * *"
