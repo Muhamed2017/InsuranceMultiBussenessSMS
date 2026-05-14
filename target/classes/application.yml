@@ -124,7 +124,7 @@ mic:
 
     motor-issuance-notification:
       stored-procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
-      cron: "0 0 12 * * *"
+      cron: "0 0/10 1-24 * * *"
       parameters:
         - name: dtFrom
           value: "TODAY"
@@ -136,14 +136,14 @@ mic:
           value: "[2000228,2000229,2000230,2000231]"
           type: STRING
       phone-field: smobilephone
-      name-field: sdivision
+      name-field: sproductar
       reference-fields:
         - spolicyno
       template: |
-        عملينا العزيز، تم إصدار وثيقتكم {sDivision}  رقم {sPolicyNo}   بمبلغ  {NetWritten} جنيه مصري.
+        عملينا العزيز، تم إصدار وثيقتكم {SPRODUCTAr}  رقم {sPolicyNo}   بمبلغ  {NetWritten} جنيه مصري.
         شكرا لاختياركم شركة مصر للتأمين ونتمنى لكم تجربة آمنة ومميزة.
         لتحميل التطبيق : https://misrins.com.eg/images/files/medical.xls
       field-mappings:
-        sdivision: sDivision
+        sdivision: SPRODUCTAr
         spolicyno: sPolicyNo
         netwritten: NetWritten
