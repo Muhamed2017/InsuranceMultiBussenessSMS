@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8083
 
 spring:
   application:
@@ -12,8 +12,8 @@ spring:
         separator: ";"
 
   datasource:
-    url: jdbc:sqlserver://10.65.183.210:1433;databaseName=MIC_SMS;encrypt=true;trustServerCertificate=true
-    username: m.jomaa
+    url: jdbc:sqlserver://10.65.182.234:1433;databaseName=MIC_DEV;encrypt=true;trustServerCertificate=true
+    username: f.ragab
     password: misr@2020
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     hikari:
@@ -53,7 +53,7 @@ logging:
 
 mic:
   provider:
-    base-url: http://10.65.192.83:8065/generic/sms
+    base-url: http://10.65.192.110:8065/generic/sms
     connect-timeout: 5000
     read-timeout: 10000
 
@@ -123,8 +123,8 @@ mic:
     #     lpolicyactivitykey: PolicyActivityKey
 
     motor-issuance-notification:
-      stored-procedure: MIC_DWH_UAT.dbo.getIssuancesForNotification
-      cron: "0 0/10 1-24 * * *"
+      stored-procedure: MIC_DEV.dbo.GetIssuancesForNotification
+      cron: "0 0/10 0-23 * * *"
       parameters:
         - name: dtFrom
           value: "TODAY"
@@ -136,14 +136,14 @@ mic:
           value: "[2000228,2000229,2000230,2000231]"
           type: STRING
       phone-field: smobilephone
-      name-field: sproductar
+      name-field: scontactreference
       reference-fields:
         - spolicyno
       template: |
         عملينا العزيز، تم إصدار وثيقتكم {SPRODUCTAr}  رقم {sPolicyNo}   بمبلغ  {NetWritten} جنيه مصري.
         شكرا لاختياركم شركة مصر للتأمين ونتمنى لكم تجربة آمنة ومميزة.
-        لتحميل التطبيق : https://misrins.com.eg/images/files/medical.xls
+        للمزيد إتصل على الخط الساخن (19114)
       field-mappings:
-        sdivision: SPRODUCTAr
+        sproductar: SPRODUCTAr
         spolicyno: sPolicyNo
         netwritten: NetWritten
